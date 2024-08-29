@@ -1,0 +1,10 @@
+{
+    "name": "WhenYouSkyblockIt",
+    "creator": "minhperry",
+    "version": "0.0.1",
+    "entry": "index.js",
+    "description": "/wysi for help",
+    "requires": [
+        "Vigilance"
+    ]
+}
