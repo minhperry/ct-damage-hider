@@ -5,6 +5,6 @@
     "entry": "index.js",
     "description": "/wysi for help",
     "requires": [
-        "Vigilance"
+        "PogData"
     ]
 }

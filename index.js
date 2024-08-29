@@ -1,4 +1,21 @@
+import PogObject from "../PogData"
 
+export let hideSettings = new PogObject("DHider", {
+    "hider": {
+        "fa": true,
+        "venom": true,
+        "thunder": true,
+        "nonCrit": true
+    }
+}, "hider.json")
+
+export class Settings {
+    static prefix = "§1§l[§9DHIDE§1§l] §r§7";
+
+    static debug = false;
+
+    static debugPrefix = "§1§l[§9DHIDE-Debug§1§l] §r§c";
+}
 
 function chat(msg) {
     ChatLib.chat(Settings.prefix + msg);
@@ -23,44 +40,42 @@ function how2Use() {
     ChatLib.chat("§7  - §aand a secret command.");
 }
 
-export class Settings {
-    static prefix = "§1§l[§9DHIDE§1§l] §r§7";
-
-    static debug = false;
-    static debugPrefix = "§1§l[§9DHIDE-Debug§1§l] §r§c";
-
-    static hideFireAspect = true;
-    static hideVenomous = true;
-    static hideThunderlord = true;
-    static hideNonCrit = true;
+function inverse(name) {
+    hideSettings.hider[name] = !hideSettings.hider[name];
 }
 
 const commandActions = {
     "fa": {
         action: () => {
-            Settings.hideFireAspect = !Settings.hideFireAspect;
+            inverse("fa");
             return `Fire Aspect hiding is now ${Settings.hideFireAspect ? "ON" : "OFF"}.`;
         }
     },
     "venom": {
         action: () => {
-            Settings.hideVenomous = !Settings.hideVenomous;
+            inverse("venom");
             return `Venomous hiding is now ${Settings.hideVenomous ? "ON" : "OFF"}.`;
         }
     },
     "thunder": {
         action: () => {
-            Settings.hideThunderlord = !Settings.hideThunderlord;
+            inverse("thunder");
             return `Thunderlord hiding is now ${Settings.hideThunderlord ? "ON" : "OFF"}.`;
         }
     },
     "noncrit": {
         action: () => {
-            Settings.hideNonCrit = !Settings.hideNonCrit;
+            inverse("nonCrit");
             return `Non-crit hiding is now ${Settings.hideNonCrit ? "ON" : "OFF"}.`;
         }
     }
 };
+
+function setAll(value) {
+    for (let key in hideSettings.hider) {
+        hideSettings.hider[key] = value;
+    }
+}
 
 register("command", (...args) => {
     const subCmd = args[0] == undefined ? undefined : args[0].toLowerCase();
@@ -78,10 +93,11 @@ register("command", (...args) => {
             chat(" https://www.youtube.com/watch?v=pc0UaLsCUm0")
             break;
         case "get":
-            chat("Fire Aspect: " + Settings.hideFireAspect);
-            chat("Venomous: " + Settings.hideVenomous);
-            chat("Thunderlord: " + Settings.hideThunderlord);
-            chat("Non-crit: " + Settings.hideNonCrit);
+            chat("§aCurrent settings: (true = on, false = off)");
+            chat("Fire Aspect: " + hideSettings.hider.fa);
+            chat("Venomous: " + hideSettings.hider.venom);
+            chat("Thunderlord: " + hideSettings.hider.thunder);
+            chat("Non-crit: " + hideSettings.hider.nonCrit);
             break;
         case "toggle":
             if (commandActions[subsub]) {
@@ -93,16 +109,10 @@ register("command", (...args) => {
             break;
         case "all":
             if (subsub == "on") {
-                Settings.hideFireAspect = true;
-                Settings.hideVenomous = true;
-                Settings.hideThunderlord = true;
-                Settings.hideNonCrit = true;
+                setAll(true);
                 chat("All options are now ON.");
             } else if (subsub == "off") {
-                Settings.hideFireAspect = false;
-                Settings.hideVenomous = false;
-                Settings.hideThunderlord = false;
-                Settings.hideNonCrit = false;
+                setAll(false);
                 chat("All options are now OFF.");
             } else chat("Invalid option: " + subsub);
             break;
@@ -110,6 +120,9 @@ register("command", (...args) => {
             chat("Unknown command: " + subCmd);
             break;
     }
+
+    hideSettings.save();
+
 }).setName("dhide")
 
 const ArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
