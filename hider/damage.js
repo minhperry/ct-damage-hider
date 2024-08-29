@@ -1,5 +1,5 @@
 import Settings from "../setting/setting";
-import { chat, debug } from "../utils/chat";
+import "../utils/chat";
 
 const ArmorStand = Java.type("net.minecraft.entity.item.EntityArmorStand");
 function getAllEntities5x5() {

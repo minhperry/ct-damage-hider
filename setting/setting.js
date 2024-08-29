@@ -1,4 +1,4 @@
-import { how2Use, chat, debug } from "../utils/chat";
+import "../utils/chat";
 
 export class Settings {
     static prefix = "§1§l[§9DHIDE§1§l] §r§7";
@@ -88,5 +88,3 @@ register("command", (...args) => {
             break;
     }
 }).setName("dhide")
-
-export default Settings;
