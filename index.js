@@ -31,7 +31,7 @@ function how2Use() {
     ChatLib.chat("§7Command: ");
     ChatLib.chat("§7  - §aget");
     ChatLib.chat("§7     Get the current status of the options.");
-    ChatLib.chat("§7  - §atoggle [fa|venom|thunder|noncrit]");
+    ChatLib.chat("§7  - §atoggle [fa / venom / thunder / noncrit]");
     ChatLib.chat("§7     Toggle the specified option. All are on by default.");
     ChatLib.chat("§7  - §adebug:");
     ChatLib.chat("§7     Toggle debug mode.");
